@@ -31,6 +31,10 @@ class Livre
     #[ORM\Column(nullable: true)]
     private ?int $nb_tome = null;
 
+    #[ORM\ManyToOne(inversedBy: 'livre')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +96,18 @@ class Livre
     public function setNbTome(?int $nb_tome): static
     {
         $this->nb_tome = $nb_tome;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): static
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
