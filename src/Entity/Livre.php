@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
-#[ApiResource]
+#[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact'])]
 class Livre
 {
     #[ORM\Id]
