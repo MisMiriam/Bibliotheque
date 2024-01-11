@@ -11,7 +11,8 @@ use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
-#[ApiResource, ApiFilter(SearchFilter::class, properties: ['nom_categorie' => 'exact'])]
+#[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact', 'nom_categorie' => 'exact'])]
+// #[ApiResource, ApiFilter(SearchFilter::class, properties: ['nom_categorie' => 'exact'])]
 class Categorie
 {
     #[ORM\Id]
@@ -19,11 +20,14 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom_categorie = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Livre::class)]
     private Collection $livre;
+
+    // #[ORM\Column(length: 255, nullable: true)] // Ajout de "nullable: true"
+    // private ?string $nom_categorie = null;
 
     public function __construct()
     {
