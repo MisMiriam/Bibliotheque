@@ -8,31 +8,46 @@ use App\Repository\LivreRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
-#[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact'])]
+#[ApiResource(
+    /* Affiche seulement le titre et l'id dans le get livre  */ 
+    normalizationContext: ['groups' => ['read:collection']],
+    /* Affiche seulement les informations modifiables dans le post livre */
+    denormalizationContext: ['groups' => ['write.book']]
+
+)]
+// #[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact'])]
 class Livre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:collection'])]
     private ?int $id = null;
 
+    #[Groups(['read:collection', 'write.book'])]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
+    #[Groups(['read:collection', 'write.book'])]
     #[ORM\Column(length: 255)]
     private ?string $auteur = null;
 
+    #[Groups(['read:item'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_publication = null;
 
+    #[Groups(['read:collection', 'write.book'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $resume = null;
 
+    #[Groups(['read:collection', 'write.book'])]
     #[ORM\Column(nullable: true)]
     private ?int $nb_tome = null;
 
+    #[Groups(['read:collection'])]
     #[ORM\ManyToOne(inversedBy: 'livre')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;

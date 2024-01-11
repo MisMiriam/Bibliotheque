@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 #[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact', 'nom_categorie' => 'exact'])]
@@ -20,6 +21,7 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Groups(['read:collection'])]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom_categorie = null;
 
