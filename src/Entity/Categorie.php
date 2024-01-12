@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
-#[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact', 'nom_categorie' => 'exact'])]
-// #[ApiResource, ApiFilter(SearchFilter::class, properties: ['nom_categorie' => 'exact'])]
+// #[ApiResource, ApiFilter(SearchFilter::class, properties: ['categorie' => 'exact', 'nom_categorie' => 'exact'])]
+#[ApiResource, ApiFilter(SearchFilter::class, properties: ['nom_categorie' => 'exact'])]
 class Categorie
 {
     #[ORM\Id]
