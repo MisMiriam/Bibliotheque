@@ -34,7 +34,7 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $auteur = null;
 
-    #[Groups(['read:item'])]
+    #[Groups(['read:book'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_publication = null;
 
